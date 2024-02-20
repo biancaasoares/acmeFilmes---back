@@ -57,8 +57,7 @@ app.get('v1/acmefilmes/filmes', cors(), async function (request,response,next){
 
  //  ENDPOINT: retorna os dados do Bando de dados
  app.get('/v2/acmefilmes/filmes', cors(), async function (request,response,next){
-
-    
+   
     // chama a função para retornar os dados de filme
       let dadosFilmes = await controllerFilmes.getListarFilmes();
 
@@ -71,6 +70,16 @@ app.get('v1/acmefilmes/filmes', cors(), async function (request,response,next){
         response.status(404);
       }
  })
+
+ // ENDPOINT: retorna o filme filtrado pelo ID
+ app.get('/v2/acmefilmes/filme/:id', cors(), async function(request,response,next){
+  let idFilme = request.params.id;
+
+  let dadosFilme = await controllerFilmes.getBuscarFilme(idFilme);
+
+  response.status(dadosFilme.status_code);
+  response.json(dadosFilme);
+})
 
 
 app.listen('8080', function(){

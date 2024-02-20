@@ -46,8 +46,16 @@ const selectAllFilmes = async function(){
 }
 
 // Função para buscar um filme no banco de dados pelo seu ID
-const selectByIdFilme = async function(){
+const selectByIdFilme = async function(id){
 
+    try{
+        let rsFilme = await prisma.$queryRawUnsafe(sql);
+    
+        return rsFilme;
+        
+    } catch (error) {
+        return false;
+    }
 }
 
 module.exports = {
