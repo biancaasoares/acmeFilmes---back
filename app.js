@@ -25,21 +25,23 @@
 */
 
 
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 // const functions = require('./controller/functions.js')
 
 const app = express()
 
 app.use((request,response,next) => {
-      response.header('Acces-Control-Allow-Origin', '*')
-      response.header('Acces-Control-Allow-Methods', 'GET')
-      app.use(cors)
-      next()
+      response.header('Acces-Control-Allow-Origin', '*');
+      response.header('Acces-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      app.use(cors());
+      next();
 })
 
 
+
+const bodyParserJSON = bodyParser.json();
 
 
 
@@ -79,6 +81,16 @@ app.get('v1/acmefilmes/filmes', cors(), async function (request,response,next){
 
   response.status(dadosFilme.status_code);
   response.json(dadosFilme);
+})
+
+
+app.post('/v2/acmefilmes/filme', cors(), bodyParserJSON, async function(request,response,next){
+        
+   let dadosBody = request.body;
+    let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody)
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
 })
 
 
