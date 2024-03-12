@@ -14,7 +14,12 @@ const filmesDAO = require('../model/DAO/filmes.js')
 
 
 // função para inserir novo filme
-const setInserirNovoFilme = async function(dadosFilme){
+const setInserirNovoFilme = async function(dadosFilme, contentType){
+
+   try{
+
+   if(String (contentType).toLowerCase() == 'application/json'){
+
 
    let statusValidated = false;
    let novoFilmeJSON = {};
@@ -61,7 +66,15 @@ const setInserirNovoFilme = async function(dadosFilme){
             }
          }
      }
-}
+   }else{
+         return message.ERROR_CONTENT_TYPE;
+   } 
+}catch(error){
+       return message.ERROR_INTERNAL_SERVER;
+  }
+ }
+
+
 
 // função para atualizar um filme existente
  const setAtualizarFilme = async function(){
