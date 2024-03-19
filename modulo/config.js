@@ -13,7 +13,8 @@ const ERROR_REQUIRED_FIELDS = {status: false, status_code: 400, message: 'Existe
 const ERROR_NOT_FOUND = {status : false, status_code:404, message: 'nenhum item encontrado na requisição'}
 const ERROR_INTERNAL_SERVER_DB = {status : false, status_code:500, message: 'Ocorreram erros no processamento do banco de dados'}
 const ERROR_CONTENT_TYPE = {status : false, status_code:415, message: 'o contet-type da requisição não é suportado na API. Deve-se encaminhar dados em formato application/json!!'}
-const ERROR_INTERNAL_SERVER = {status : false, status_code:500, message: 'Ocorreram erros no servido Back-end na camada de serviços/negócios'}
+const ERROR_INTERNAL_SERVER = {status : false, status_code:500, message: 'Ocorreram erros no servidor Back-end na camada de serviços/negócios'}
+const SUCESS_DELETE_ITEM = {status : false, status_code:200, message:'O item foi exluido com sucesso'}
 /**************************************************************/
                  /*  MENSAGENS DE SUCESSO DO PROJETO */
 
@@ -27,5 +28,6 @@ module.exports = {
     ERROR_INTERNAL_SERVER_DB,
     SUCCESS_CREATED_ITEM,
     ERROR_CONTENT_TYPE,
-    ERROR_INTERNAL_SERVER
+    ERROR_INTERNAL_SERVER,
+    SUCESS_DELETE_ITEM
 }

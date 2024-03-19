@@ -25,78 +25,94 @@
 */
 
 
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
 // const functions = require('./controller/functions.js')
 
 const app = express()
 
-app.use((request,response,next) => {
-      response.header('Acces-Control-Allow-Origin', '*');
-      response.header('Acces-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-      app.use(cors());
-      next();
+app.use((request, response, next) => {
+  response.header('Acces-Control-Allow-Origin', '*')
+  response.header('Acces-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  app.use(cors())
+  next()
 })
 
 
 
-const bodyParserJSON = bodyParser.json();
+const bodyParserJSON = bodyParser.json()
 
 
 
 /*********************************iMPORT DOS ARQUIVOS INTERNOS DO PROJETO***************************/
-                const controllerFilmes = require ('./controller/controller_filme.js')
+const controllerFilmes = require('./controller/controller_filme.js')
 
 
- 
 
 
-  // ENDPOINT: retorna os dados do arquivo JSON
-app.get('v1/acmefilmes/filmes', cors(), async function (request,response,next){
+
+// ENDPOINT: retorna os dados do arquivo JSON
+app.get('v1/acmefilmes/filmes', cors(), async function (request, response, next) {
 
 })
 
- //  ENDPOINT: retorna os dados do Bando de dados
- app.get('/v2/acmefilmes/filmes', cors(), async function (request,response,next){
-   
-    // chama a função para retornar os dados de filme
-      let dadosFilmes = await controllerFilmes.getListarFilmes();
+//  ENDPOINT: retorna os dados do Bando de dados
+app.get('/v2/acmefilmes/filmes', cors(), async function (request, response, next) {
 
-      //validação para retornar os dados ou o erro quando não houver dados
-      if(dadosFilmes){
-      response.json(dadosFilmes);
-      response.status(200);
-      } else {
-        response.json({message: 'Nenhum registro encontrado '});
-        response.status(404);
-      }
- })
+  // chama a função para retornar os dados de filme
+  let dadosFilmes = await controllerFilmes.getListarFilmes()
 
- // ENDPOINT: retorna o filme filtrado pelo ID
- app.get('/v2/acmefilmes/filme/:id', cors(), async function(request,response,next){
-  let idFilme = request.params.id;
+  //validação para retornar os dados ou o erro quando não houver dados
+  if (dadosFilmes) {
+    response.json(dadosFilmes)
+    response.status(200)
+  } else {
+    response.json({ message: 'Nenhum registro encontrado ' })
+    response.status(404)
+  }
+})
 
-  let dadosFilme = await controllerFilmes.getBuscarFilme(idFilme);
+// ENDPOINT: retorna o filme filtrado pelo ID
+app.get('/v2/acmefilmes/filme/:id', cors(), async function (request, response, next) {
+  let idFilme = request.params.id
 
-  response.status(dadosFilme.status_code);
-  response.json(dadosFilme);
+  let dadosFilme = await controllerFilmes.getBuscarFilme(idFilme)
+
+  response.status(dadosFilme.status_code)
+  response.json(dadosFilme)
 })
 
 
-app.post('/v2/acmefilmes/filme', cors(), bodyParserJSON, async function(request,response,next){
-        
-   let contentType = request.headers['content-type'];
+app.post('/v2/acmefilmes/filme', cors(), bodyParserJSON, async function (request, response, next) {
+
+  let contentType = request.headers['content-type']
 
 
-   let dadosBody = request.body;
-    let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody, contentType)
+  let dadosBody = request.body
+  let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody, contentType)
 
-    response.status(resultDados.status_code);
-    response.json(resultDados);
+  response.status(resultDados.status_code)
+  response.json(resultDados)
+})
+
+app.put('/v2/acmefilmes/filme/:id', cors(), bodyParserJSON, async function (request, response, next) {
+
+  let idFilme = request.params.id
+
+  let contentType = request.headers['content-type']
+
+
+  let dadosBody = request.body
+  let resultDados = await controllerFilmes.setInserirNovoFilme(dadosBody, contentType, idFilme)
+
+  response.status(resultDados.status_code)
+  response.json(resultDados)
 })
 
 
-app.listen('8080', function(){
-    console.log('API funcionando')
+
+
+app.listen('8080', function () {
+  console.log('API funcionando')
 })
