@@ -110,18 +110,13 @@ app.put('/v2/acmefilmes/filme/:id', cors(), bodyParserJSON, async function (requ
   response.json(resultDados)
 })
 
-app.delete('/v2/acmefilmes/filme/:id', cors(), bodyParserJSON, async function (request, response, next) {
-
+app.delete('/v2/acmefilmes/filme/:id',  cors(), bodyParserJSON, async (request, response, next) => {
+   
   let idFilme = request.params.id
+  let dadosFilme = await controllerFilmes.setExcluirFilme(idFilme)
 
-  let contentType = request.headers['content-type']
-
-
-  let dadosBody = request.body
-  let resultDados = await controllerFilmes.setExcluirFilme(dadosBody, contentType, idFilme)
-
-  response.status(resultDados.status_code)
-  response.json(resultDados)
+  response.status(dadosFilme.status_code)
+  response.json(dadosFilme)
 })
 
 

@@ -75,14 +75,14 @@ const insertFilme = async function (dadosFilme) {
 
 // Função para atualizar um filme no banco de dados
 const updateFilme = async function (dadosFilme,idFilme) {
-  console.log("oi")
+
     let sql
 
     try {
 
         //Validação para verificar se a data de relançamento é vazia, pois devemos ajustar o script SQL para o BD --- > 
         //OBS: essa condição é provisória, já que iremos tratar no BD com uma procedure
-        console.log("oiee")
+    
         if (dadosFilme.data_relancamento == null ||
             dadosFilme.data_relancamento == undefined ||
             dadosFilme.data_relancamento == ''
@@ -111,7 +111,7 @@ const updateFilme = async function (dadosFilme,idFilme) {
 
         }
 
-         console.log(sql)
+        
         let result = await prisma.$executeRawUnsafe(sql)
 
         if (result)
@@ -123,7 +123,6 @@ const updateFilme = async function (dadosFilme,idFilme) {
         //Cria a variável SQL
 
     } catch (error) {
-       console.log(error)
         return false
     }
 
@@ -131,7 +130,7 @@ const updateFilme = async function (dadosFilme,idFilme) {
 }
 
 // Função para deletar um filme no banco de dados
-const deleteFilme = async function () {
+const deleteFilme = async (id) => {
 
     try {
         let sql = `delete from tbl_filme where id = ${id}`
@@ -167,6 +166,7 @@ const selectAllFilmes = async function () {
 const selectByIdFilme = async function (id) {
 
     try {
+        let sql = 'select * from tbl_filme where id='+ id
         let rsFilme = await prisma.$queryRawUnsafe(sql);
 
         return rsFilme;

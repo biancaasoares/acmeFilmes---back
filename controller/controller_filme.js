@@ -141,37 +141,36 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
 }
 
 
-const setExcluirFilme = async function () {
+const setExcluirFilme = async (id) => {
 
    try {
 
-      let idFilme = id
+       let idFilme = id
 
-      let validaFilme = await getBuscarFilme(idFilme)
+       let validaFilme = await getBuscarFilme(idFilme)
+       console.log(validaFilme)
+       let dadosFilme = await filmesDAO.deleteFilme(idFilme)
 
-      let dadosFilme = await filmesDAO.deleteFilme(idFilme)
+       if (idFilme == '' || idFilme == undefined || isNaN(idFilme)) {
 
-      if (idFilme == '' || idFilme == undefined || isNaN(idFilme)) {
+           return message.ERROR_INVALID_ID //400
 
-          return message.ERROR_INVALID_ID //400
+       } else if(validaFilme.status == false){
+           return message.ERROR_NOT_FOUND
 
-      } else if(validaFilme.status == false){
-          return message.ERROR_NOT_FOUND
+       } else {
+           
+           if(dadosFilme)
+               return message.SUCESS_DELETE_ITEM // 200
+           else
+               return message.ERROR_INTERNAL_SERVER_DB
 
-      } else {
-          
-          if(dadosFilme)
-              return message.SUCESS_DELETE_ITEM // 200
-          else
-              return message.ERROR_INTERNAL_SERVER_DB
-
-      }
+       }
 
 
-  } catch (error) {
-      return message.ERROR_INTERNAL_SERVER
-  }
-
+   } catch (error) {
+       return message.ERROR_INTERNAL_SERVER
+   }
 
 }
 
