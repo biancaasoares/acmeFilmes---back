@@ -100,7 +100,7 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
                dadosFilme.data_relancamento != null &&
                dadosFilme.data_relancamento != undefined) {
                if (dadosFilme.data_relancamento.length != 10) {
-                  return message.ERROR_REQUIRED_FIELDS //400
+                  return message.ERROR_REQUIRED_FIELDS 
                } else {
                   statusValidated = true
                }
@@ -111,11 +111,11 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
 
             if (statusValidated) {
 
-               let filmeAtualizado = await filmesDAO.insertFilme(dadosFilme)
+               let filmeAtualizado = await filmesDAO.updateFilme(dadosFilme,id)
 
                if (filmeAtualizado) {
 
-                  let id = await filmesDAO.updateFilme()
+               
 
                   atualizarFilmeJSON.status = message.SUCCESS_CREATED_ITEM.status
                   atualizarFilmeJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
@@ -134,6 +134,7 @@ const setAtualizarFilme = async function (id, dadosFilme, contentType) {
          return message.ERROR_CONTENT_TYPE
       }
    } catch (error) {
+      console.log(error)
       return message.ERROR_INTERNAL_SERVER
    }
 

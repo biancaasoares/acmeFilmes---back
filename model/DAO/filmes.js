@@ -74,45 +74,44 @@ const insertFilme = async function (dadosFilme) {
 }
 
 // Função para atualizar um filme no banco de dados
-const updateFilme = async function () {
-
+const updateFilme = async function (dadosFilme,idFilme) {
+  console.log("oi")
     let sql
 
     try {
 
         //Validação para verificar se a data de relançamento é vazia, pois devemos ajustar o script SQL para o BD --- > 
         //OBS: essa condição é provisória, já que iremos tratar no BD com uma procedure
-
+        console.log("oiee")
         if (dadosFilme.data_relancamento == null ||
             dadosFilme.data_relancamento == undefined ||
             dadosFilme.data_relancamento == ''
         ) {
 
             sql = `update tbl_filme set 
-                                                '${dadosFilme.nome}',
-                                                '${dadosFilme.sinopse}',
-                                                '${dadosFilme.duracao}',
-                                                '${dadosFilme.data_lancamento}',
-                                                '${dadosFilme.foto_capa}',
-                                                '${dadosFilme.valor_unitario}'
+                                            nome =    '${dadosFilme.nome}',
+                                            sinopse =    '${dadosFilme.sinopse}',
+                                            duracao =    '${dadosFilme.duracao}',
+                                            data_lancamento = '${dadosFilme.data_lancamento}',
+                                            foto_capa ='${dadosFilme.foto_capa}',
+                                            valor_unitario ='${dadosFilme.valor_unitario}'
                     where id = ${idFilme}`
 
         } else {
 
             sql = `update tbl_filme set
-                                                   '${dadosFilme.nome}',
-                                                   '${dadosFilme.sinopse}',
-                                                   '${dadosFilme.duracao}',
-                                                   '${dadosFilme.data_lancamento}',
-                                                   '${dadosFilme.data_relancamento}',
-                                                   '${dadosFilme.foto_capa}',
-                                                   '${dadosFilme.valor_unitario}'
+                                                nome = '${dadosFilme.nome}',
+                                                sinopse ='${dadosFilme.sinopse}',
+                                                duracao ='${dadosFilme.duracao}',
+                                                lancamento ='${dadosFilme.data_lancamento}',
+                                                relancamento ='${dadosFilme.data_relancamento}',
+                                                foto_capa ='${dadosFilme.foto_capa}',
+                                                valor_unitario ='${dadosFilme.valor_unitario}'
                     where id = ${idFilme}`
 
         }
 
-        //$executeRawUnsafe() - serve para executar scripts sql que não retornam valores (insert, update e delete)
-        //$queryRawUnsafe() - serve para executar scripts sql que RETORNAM dados do BD (select)
+         console.log(sql)
         let result = await prisma.$executeRawUnsafe(sql)
 
         if (result)
@@ -124,7 +123,7 @@ const updateFilme = async function () {
         //Cria a variável SQL
 
     } catch (error) {
-
+       console.log(error)
         return false
     }
 

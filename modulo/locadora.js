@@ -4,7 +4,7 @@ var filmes = {
 		"id": 1,  
         "nome": "O Segredo do Vale",
         "sinopse": "Um drama emocionante que explora os segredos de uma pequena cidade no interior.",
-        "duracao": "2 horas e 15 minutos",
+        "duracao": "01:37:00",
         "data_lancamento": "2022-08-25",
         "data_relancamento": null,
         "foto_capa": "https://exemplo.com/foto_vale.jpg",
